@@ -24,7 +24,6 @@ import java.util.*
 
 class FetchFragment : Fragment() {
 
-    private lateinit var joke:List<Jokes>
 
 
     override fun onCreateView(
@@ -33,37 +32,7 @@ class FetchFragment : Fragment() {
         ): View {
         val view:View=inflater.inflate(R.layout.fragment_fetch, container, false)
 
-        var rv:RecyclerView=view.findViewById(R.id.rvJokes)
-        var ja:JokesAdapter= JokesAdapter(joke)
 
-        rv.layoutManager=LinearLayoutManager(context)
-        rv.adapter=ja
-
-
-
-
-        RetrofitInstance.api.getTodos().enqueue(object : Callback<List<Jokes>>{
-
-            override fun onResponse(call: Call<List<Jokes>>, response: Response<List<Jokes>>) {
-                if(response.message()=="OK") {
-                    joke = response.body()!!
-
-                    Log.d("apicall", joke.toString() )
-
-                    ja = JokesAdapter(joke)
-                    ja.notifyDataSetChanged()
-                }
-                else{
-                      Log.d("apicall", response.message() )
-
-                }
-
-            }
-
-            override fun onFailure(call: Call<List<Jokes>>, t: Throwable) {
-                Log.d("apicall", t.message.toString() )
-            }
-        })
 
         return view
     }
